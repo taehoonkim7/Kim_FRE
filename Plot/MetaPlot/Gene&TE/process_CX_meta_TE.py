@@ -1,8 +1,7 @@
-import datetime
 import sys
 from decimal import *
 
-def Count_file_line (infile):
+def count_file_line (infile):
 
     i = 0
     f = open (infile, 'r')
@@ -15,7 +14,7 @@ def Count_file_line (infile):
     return Len
 
 
-def Initialize_lst (updown, updown_bin, propbin):
+def initialize_lst (updown, updown_bin, propbin):
 
     lst = []
 
@@ -28,7 +27,7 @@ def Initialize_lst (updown, updown_bin, propbin):
     return lst
 
 
-def Make_index_dic (infile, Updown, Updown_bin, Gene_propbin):
+def make_index_dic (infile, Updown, Updown_bin, Gene_propbin):
 
     f = open (infile, 'r')
     ls = f.readlines()
@@ -73,11 +72,10 @@ def Make_index_dic (infile, Updown, Updown_bin, Gene_propbin):
     return index_dic
 
 
-def Filter_CX_report (infile, index_dic, output_lst, total_bin):
+def filter_CX_report (infile, index_dic, output_lst, total_bin):
 
     f = open (infile, 'r')
-    Len = Count_file_line (infile)
-    print(datetime.datetime.now(), f"Before filtering: {Len} lines", flush = True)
+    Len = count_file_line (infile)
 
     filtered = 0
     for i in range (Len):
@@ -114,42 +112,13 @@ def Filter_CX_report (infile, index_dic, output_lst, total_bin):
                                 output_lst[index][5] += C
         except:
             pass
-        
-        i_lines = i+1
-        if i_lines == 1:
-            print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-            print (datetime.datetime.now(), f"{filtered} lines remaining", flush = True)
-        elif i_lines == 10:
-            print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-            print (datetime.datetime.now(), f"{filtered} lines remaining", flush = True)
-        elif i_lines == 100:
-            print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-            print (datetime.datetime.now(), f"{filtered} lines remaining", flush = True)
-        elif i_lines == 1000:
-            print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-            print (datetime.datetime.now(), f"{filtered} lines remaining", flush = True)
-        elif i_lines == 10000:
-            print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-            print (datetime.datetime.now(), f"{filtered} lines remaining", flush = True)
-        elif i_lines == 100000:
-            print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-            print (datetime.datetime.now(), f"{filtered} lines remaining", flush = True)
-        elif i_lines == 1000000:
-            print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-            print (datetime.datetime.now(), f"{filtered} lines remaining", flush = True)
-        elif i_lines % 10000000 == 0:
-            print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-            print (datetime.datetime.now(), f"{filtered} lines remaining", flush = True)
 
     f.close()
-
-    print (datetime.datetime.now(), f"{i_lines} lines processed", flush = True)
-    print (datetime.datetime.now(), f"After filtering: {filtered} lines", flush = True)
 
     return output_lst
 
 
-def Print_output (output_lst, outfile_head):
+def print_output (output_lst, outfile_head):
 
     o1 = open (f"{outfile_head}_CpG.txt", 'w')
     o2 = open (f"{outfile_head}_CHG.txt", 'w')
@@ -192,22 +161,15 @@ def main():
     outfile_head = sys.argv[3]
     UpDown = int(sys.argv[4])        #2000-bp upstream & downstream regions
     UpDown_bin = int(sys.argv[5])    #100-bp bin for upstream & downstream regions
-    Body_propbin = int(sys.argv[6])  #20-proportional bin for Gene body and TE body
+    Body_propbin = int(sys.argv[6])  #20-proportional bin for TE body
 
     total_bin = int(UpDown/UpDown_bin)*2 + Body_propbin
 
-    print(datetime.datetime.now(), "Program started", flush = True)
-
-    index_dic = Make_index_dic (f_gff3, UpDown, UpDown_bin, Body_propbin)
-    output_lst = Initialize_lst (UpDown, UpDown_bin, Body_propbin)
-
-    output_lst = Filter_CX_report (f_CX, index_dic, output_lst, total_bin)
-    Print_output (output_lst, f"{outfile_head}")
+    index_dic = make_index_dic (f_gff3, UpDown, UpDown_bin, Body_propbin)
+    output_lst = initialize_lst (UpDown, UpDown_bin, Body_propbin)
+    output_lst = filter_CX_report (f_CX, index_dic, output_lst, total_bin)
+    print_output (output_lst, f"{outfile_head}")
     
-    print(datetime.datetime.now(), f"{UpDown}-bp upstream and downstream regions with {UpDown_bin}-bp bins", flush = True)
-    print(datetime.datetime.now(), f"Gene body with {Body_propbin}-proprtional bins", flush = True)
-    print(datetime.datetime.now(), "Program completed", flush = True)
-
 
 if __name__ == "__main__":
     main()
