@@ -1,0 +1,15 @@
+Element,if_TE,Count
+2kb-upstream,Non-TE,20
+2kb-upstream,TE,202
+5'UTR,Non-TE,1
+5'UTR,TE,2
+CDS,Non-TE,19
+CDS,TE,32
+3'UTR,Non-TE,5
+3'UTR,TE,19
+Intronic,Non-TE,18
+Intronic,TE,90
+2kb-downstream,Non-TE,26
+2kb-downstream,TE,184
+Intergenic,Non-TE,37
+Intergenic,TE,221
