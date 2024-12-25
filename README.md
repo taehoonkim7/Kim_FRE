@@ -2,7 +2,7 @@
 
 ## Introduction
 
-- Codes and datasets for [Preprint](https://doi.org/10.1101/2024.12.03.626448) (to be updated once published)
+- Codes for [Preprint](https://doi.org/10.1101/2024.12.03.626448) (to be updated once published)
 - FRE: female-specific RdDM-associated element
 
 ## Table of Contents
